@@ -19,7 +19,7 @@ public class FireBase {
         if (databaseReferenceUsers == null)
         {
             //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            databaseReferenceUsers = FirebaseDatabase.getInstance().getReference("Usuarios/");
+            databaseReferenceUsers = FirebaseDatabase.getInstance().getReference("Usuario/");
          //   databaseReference.keepSynced(true);
 
         }

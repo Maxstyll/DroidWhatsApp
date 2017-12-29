@@ -23,7 +23,10 @@ import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthActionCodeException;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -32,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 import ray.droid.com.droidwhatsapp.R;
 import ray.droid.com.droidwhatsapp.helper.FireBase;
+import ray.droid.com.droidwhatsapp.model.Usuario;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -193,14 +197,49 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             Toast.makeText(LoginActivity.this, "LOGIN FEITO COM SUCESSO", Toast.LENGTH_SHORT).show();
 
-                            // FirebaseUser user = task.getResult().getUser();
-                            // ...
+                            FirebaseUser user = task.getResult().getUser();
+
+                            Usuario usuario = new Usuario();
+                            usuario.setId(user.getUid());
+                            usuario.setTelefone(user.getPhoneNumber().toString());
+                            usuario.setNome(nome.getText().toString());
+                            usuario.Salvar();
+
                         } else {
+
+                            /*
+                            String erroExcessao = "";
+;
+                            try
+                            {
+                                throw task.getException();
+
+                            }
+                            catch (FirebaseAuthInvalidUserException e)
+                            {
+                                erroExcessao= "Usuário desabilitado";
+                            }
+                            catch (FirebaseAuthInvalidCredentialsException e)
+                            {
+                                erroExcessao= "Dados do usuário inválido";
+                            }
+
+                            catch (FirebaseAuthUserCollisionException e)
+                            {
+                                erroExcessao= "Usuário já existe cadastrado";
+
+                            } catch (Exception e) {
+                                erroExcessao= "Erro ao efetuar o cadastro";
+                                e.printStackTrace();
+                            }
+
+                            Toast.makeText(LoginActivity.this, "Erro: " + erroExcessao, Toast.LENGTH_SHORT).show();
+*/
                             // Sign in failed, display a message and update the UI
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                                Toast.makeText(LoginActivity.this, "LOGIN INVALIDO", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Erro ao efetuar o registro", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
