@@ -1,6 +1,7 @@
 package ray.droid.com.droidwhatsapp.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -60,12 +61,15 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText codValidacao;
     private Button validar;
+    private FirebaseAuth autenticacao;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        VerficarUsuarioLogado();
 
         nome = findViewById(R.id.edt_nome);
         codPais = findViewById(R.id.edt_codPais);
@@ -205,6 +209,9 @@ public class LoginActivity extends AppCompatActivity {
                             usuario.setNome(nome.getText().toString());
                             usuario.Salvar();
 
+                            AbrirTelaPrincipal();
+
+
                         } else {
 
                             /*
@@ -297,5 +304,24 @@ public class LoginActivity extends AppCompatActivity {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void VerficarUsuarioLogado()
+    {
+        autenticacao = FireBase.getFirebaseAuth();
+        if (autenticacao.getCurrentUser() != null)
+        {
+            AbrirTelaPrincipal();
+
+
+        }
+
+    }
+
+    private void AbrirTelaPrincipal()
+    {
+
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }

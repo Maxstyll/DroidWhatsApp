@@ -89,9 +89,10 @@
             android:layout_alignStart="@+id/edt_codPais"
             android:layout_below="@+id/edt_codPais"
             android:layout_marginTop="52dp"
-            android:background="@color/colorPrimaryDark"
+
             android:text="@string/botao_cadastrar"
-            android:textColor="@color/textColorPrimary" />
+
+            android:theme="@style/botaoPadrao"/>
 
 
     </RelativeLayout>
