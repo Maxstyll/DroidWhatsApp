@@ -46,4 +46,11 @@ public class FireBase {
         return firebaseAuth;
     }
 
+    public static String getUsuarioAutenticado()
+    {
+        return getFirebaseAuth().getCurrentUser().getPhoneNumber();
+    }
+
+
+
 }

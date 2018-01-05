@@ -1,23 +1,32 @@
 package ray.droid.com.droidwhatsapp.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import ray.droid.com.droidwhatsapp.R;
 import ray.droid.com.droidwhatsapp.adapter.TabAdapter;
+import ray.droid.com.droidwhatsapp.helper.FireBase;
 import ray.droid.com.droidwhatsapp.helper.SlidingTabLayout;
+import ray.droid.com.droidwhatsapp.model.Usuario;
+
+import static ray.droid.com.droidwhatsapp.helper.Comum.ListarContatos;
+import static ray.droid.com.droidwhatsapp.helper.Comum.RemoveCaracteres;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,7 +64,10 @@ public class MainActivity extends AppCompatActivity {
 
         slidingTabLayout.setViewPager(viewPager);
 
+
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
