@@ -8,5 +8,7 @@
     <ListView
         android:id="@+id/lv_contatos"
         android:layout_width="match_parent"
+        android:divider="@color/colorGray"
+        android:dividerHeight="1dp"
         android:layout_height="match_parent" />
 </FrameLayout>

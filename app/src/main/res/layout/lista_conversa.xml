@@ -19,13 +19,13 @@
     </TextView>
 
     <TextView
-        android:id="@+id/tv_telefone"
+        android:id="@+id/tv_conversa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:text="1199718-0989"
+        android:text="Ola"
         android:textColor="@android:color/black"
         android:textSize="14sp" />
 

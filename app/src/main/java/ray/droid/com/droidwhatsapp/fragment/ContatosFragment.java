@@ -1,11 +1,13 @@
 package ray.droid.com.droidwhatsapp.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 import java.util.concurrent.LinkedTransferQueue;
 
 import ray.droid.com.droidwhatsapp.R;
+import ray.droid.com.droidwhatsapp.activity.ConversaActivity;
+import ray.droid.com.droidwhatsapp.adapter.ContatoAdapter;
 import ray.droid.com.droidwhatsapp.helper.FireBase;
 import ray.droid.com.droidwhatsapp.model.Usuario;
 
@@ -31,9 +35,10 @@ public class ContatosFragment extends Fragment {
 
     private ListView lv_contatos;
     private ArrayAdapter adapter;
-    private ArrayList<String> contatos;
+    private ArrayList<Usuario> contatos;
     private ArrayList<Usuario> listaContatos;
     private String usuarioAut ;
+    private ValueEventListener eventListenerContatos;
 
 
 
@@ -41,6 +46,19 @@ public class ContatosFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FireBase.getFireBaseUsers().addValueEventListener(eventListenerContatos);
+        System.out.println("EventListener addValueEventListener");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        FireBase.getFireBaseUsers().removeEventListener(eventListenerContatos);
+        System.out.println("EventListener removeEventListener");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,11 +73,12 @@ public class ContatosFragment extends Fragment {
         listaContatos = ListarContatos (getContext());
         usuarioAut = RemoveCaracteres(FireBase.getUsuarioAutenticado());
 
-        FireBase.getFireBaseUsers().addValueEventListener(new ValueEventListener() {
+        eventListenerContatos = new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                contatos.clear();
                 for (DataSnapshot ds1 : dataSnapshot.getChildren()) {
                     Usuario usuario = ds1.getValue(Usuario.class);
 
@@ -70,19 +89,35 @@ public class ContatosFragment extends Fragment {
                             String contatoTel = RemoveCaracteres(contatoTelefone.getTelefone());
                             String usuarioApp = RemoveCaracteres(usuario.getTelefone());
 
-
                             if  (contatoTel.equals(usuarioApp)){
                                 if (!usuarioApp.equals(usuarioAut)) {
-                                    contatos.add(usuario.getNome());
+                                    if (!contatos.contains(usuario)) {
+                                        contatos.add(usuario);
+                                    }
                                 }
                             }
 
-                          //  System.out.println("Compara " + contatoTelefone.getNome() + " - " + RemoveCaracteres(contatoTelefone.getTelefone()) + " = " + RemoveCaracteres(usuario.getTelefone()));
+                            System.out.println("Compara " + contatoTelefone.getNome() + " - " + RemoveCaracteres(contatoTelefone.getTelefone()) + " = " + RemoveCaracteres(usuario.getTelefone()));
 
                         }
 
                     }
                 }
+/*
+                adapter = new ArrayAdapter(
+                        getActivity(),
+                        R.layout.lista_contato,
+                        contatos
+
+                );
+
+
+*/
+
+                adapter = new ContatoAdapter(getActivity(), contatos);
+                lv_contatos.setAdapter(adapter);
+
+
             }
 
 
@@ -90,18 +125,24 @@ public class ContatosFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
 
-        adapter = new ArrayAdapter(
-                getActivity(),
-                R.layout.lista_contato,
-                contatos
 
-        );
+      lv_contatos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+          @Override
+          public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+              Intent intent = new Intent(getActivity(), ConversaActivity.class);
 
-        lv_contatos.setAdapter(adapter);
+              Usuario contato = contatos.get(i);
+              intent.putExtra("nome", contato.getNome());
+              intent.putExtra("telefone", contato.getTelefone());
+              startActivity(intent);
+          }
+      });
+
 
         return view;
     }
+
 
 }

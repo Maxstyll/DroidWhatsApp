@@ -41,11 +41,15 @@ public class Comum {
                     clsPhoneName = RemoveCaracteres(c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)));
                     clsphoneNo = RemoveCaracteres(c.getString(c.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)));
 
-                    System.out.println(clsPhoneName + " " + clsphoneNo);
+                    System.out.println("robray-all " + clsPhoneName + " " + clsphoneNo);
                     Usuario contato = new Usuario();
                     contato.setNome(clsPhoneName);
                     contato.setTelefone(clsphoneNo);
                     contatos.add(contato);
+                    if (clsPhoneName.equals("RobertoAbla"))
+                    {
+                        System.out.println("robray " + clsPhoneName + " " + clsphoneNo);
+                    }
                 } while (c.moveToNext());
             }
 

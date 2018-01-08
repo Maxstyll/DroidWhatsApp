@@ -11,46 +11,45 @@ import com.google.firebase.database.FirebaseDatabase;
 public class FireBase {
 
     private static DatabaseReference databaseReferenceUsers;
-    private static DatabaseReference databaseReferencePedidos;
+    private static DatabaseReference databaseReferenceMensagens;
+    private static DatabaseReference databaseReferenceConversas;
     private static FirebaseAuth firebaseAuth;
 
-    public static DatabaseReference getFireBaseUsers()
-    {
-        if (databaseReferenceUsers == null)
-        {
-            //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+    public static DatabaseReference getFireBaseUsers() {
+        if (databaseReferenceUsers == null) {
             databaseReferenceUsers = FirebaseDatabase.getInstance().getReference("Usuario/");
-         //   databaseReference.keepSynced(true);
-
         }
         return databaseReferenceUsers;
     }
 
-    public static DatabaseReference getFireBasePedido()
-    {
-        if (databaseReferencePedidos == null)
-        {
-            //FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-            databaseReferencePedidos = FirebaseDatabase.getInstance().getReference("Pedidos/");
-            //   databaseReference.keepSynced(true);
+    public static DatabaseReference getFireBaseMensagens() {
+        if (databaseReferenceMensagens == null) {
+            databaseReferenceMensagens = FirebaseDatabase.getInstance().getReference("Mensagens/");
         }
-        return databaseReferencePedidos;
+        return databaseReferenceMensagens;
     }
 
-    public static FirebaseAuth getFirebaseAuth()
-    {
-        if (firebaseAuth == null)
-        {
+    public static DatabaseReference getFireBaseConversas() {
+        if (databaseReferenceConversas == null) {
+            databaseReferenceConversas = FirebaseDatabase.getInstance().getReference("Conversas/");
+        }
+        return databaseReferenceConversas;
+    }
+
+    public static FirebaseAuth getFirebaseAuth() {
+        if (firebaseAuth == null) {
             firebaseAuth = FirebaseAuth.getInstance();
         }
         return firebaseAuth;
     }
 
-    public static String getUsuarioAutenticado()
-    {
+    public static String getUsuarioAutenticado() {
         return getFirebaseAuth().getCurrentUser().getPhoneNumber();
     }
 
+    public static String getUsuarioNomeAutenticado() {
+        return getFirebaseAuth().getCurrentUser().getDisplayName();
+    }
 
 
 }
