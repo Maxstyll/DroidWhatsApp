@@ -47,14 +47,14 @@ public class ConversasFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FireBase.getFireBaseConversas().addValueEventListener(eventListenerConversas);
+        FireBase.getFireBaseConversas().child(FireBase.getUsuarioAutenticado()).addValueEventListener(eventListenerConversas);
         System.out.println("EventListener addValueEventListener");
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        FireBase.getFireBaseConversas().removeEventListener(eventListenerConversas);
+        FireBase.getFireBaseConversas().child(FireBase.getUsuarioAutenticado()).removeEventListener(eventListenerConversas);
         System.out.println("EventListener removeEventListener");
     }
 
@@ -76,21 +76,16 @@ public class ConversasFragment extends Fragment {
 
                 conversas.clear();
                 for (DataSnapshot ds1 : dataSnapshot.getChildren()) {
-                    for (DataSnapshot ds2 : ds1.getChildren()) {
 
-                        Conversa conversa = ds2.getValue(Conversa.class);
+                    Conversa conversa = ds1.getValue(Conversa.class);
 
-                        if (conversa != null && conversa.getIdUsuario() != null) {
-
-
-                            String idUsuario = RemoveCaracteres(conversa.getIdUsuario());
-
-
-                            if (!idUsuario.equals(usuarioAut)) {
-                                conversas.add(conversa);
-                            }
+                    if (conversa != null && conversa.getIdUsuario() != null) {
+                        String idUsuario = RemoveCaracteres(conversa.getIdUsuario());
+                        if (!idUsuario.equals(usuarioAut)) {
+                            conversas.add(conversa);
                         }
                     }
+
                 }
 /*
                 adapter = new ArrayAdapter(
