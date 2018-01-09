@@ -24,6 +24,7 @@ import ray.droid.com.droidwhatsapp.adapter.MensagemAdapter;
 import ray.droid.com.droidwhatsapp.helper.FireBase;
 import ray.droid.com.droidwhatsapp.model.Conversa;
 import ray.droid.com.droidwhatsapp.model.Mensagem;
+import ray.droid.com.droidwhatsapp.model.Usuario;
 
 public class ConversaActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -31,6 +32,7 @@ public class ConversaActivity extends AppCompatActivity {
     private String nome;
     private String telefone;
     private String telefoneAutenticado;
+    private String nomeAutenticado;
     private EditText edt_mensagem;
     private ImageButton btn_enviar;
     private ListView lv_conversas;
@@ -39,6 +41,7 @@ public class ConversaActivity extends AppCompatActivity {
     private ValueEventListener valueEventListener;
     private EditText edt_remetente;
     private EditText edt_destinatario;
+
 
 
 
@@ -70,6 +73,20 @@ public class ConversaActivity extends AppCompatActivity {
 
 
         lv_conversas.setAdapter(adapter);
+
+
+        FireBase.getFireBaseUsers().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Usuario usuario = dataSnapshot.child(telefoneAutenticado).getValue(Usuario.class);
+                nomeAutenticado = usuario.getNome();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -135,7 +152,7 @@ public class ConversaActivity extends AppCompatActivity {
                     {
                         conversa = new Conversa();
                         conversa.setIdUsuario(telefoneAutenticado);
-                        conversa.setNome(FireBase.getUsuarioNomeAutenticado());
+                        conversa.setNome(nomeAutenticado);
                         conversa.setMensagem(txtMensagem);
 
                         Boolean retornoConversaDestinatario = SalvarConversa(telefone, telefoneAutenticado, conversa);
