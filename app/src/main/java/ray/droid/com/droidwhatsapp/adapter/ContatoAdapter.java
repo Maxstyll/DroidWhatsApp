@@ -38,9 +38,9 @@ public class ContatoAdapter extends ArrayAdapter<Usuario> {
        if (contatos != null)
        {
            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-           view = inflater.inflate(R.layout.lista_contato, parent, false);
-           TextView nomeContato = view.findViewById(R.id.tv_nome);
-           TextView telefoneContato = view.findViewById(R.id.tv_telefone);
+           view = inflater.inflate(R.layout.lista_simples, parent, false);
+           TextView nomeContato = view.findViewById(R.id.tv_titulo);
+           TextView telefoneContato = view.findViewById(R.id.tv_subtitulo);
            Usuario contato = contatos.get(position);
            nomeContato.setText(contato.getNome());
            telefoneContato.setText(contato.getTelefone());

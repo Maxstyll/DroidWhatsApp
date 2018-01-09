@@ -38,9 +38,9 @@ public class ConversaAdapter extends ArrayAdapter<Conversa> {
        if (conversas != null)
        {
            LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-           view = inflater.inflate(R.layout.lista_conversa, parent, false);
-           TextView nomeContato = view.findViewById(R.id.tv_nome);
-           TextView conversaContato = view.findViewById(R.id.tv_conversa);
+           view = inflater.inflate(R.layout.lista_simples, parent, false);
+           TextView nomeContato = view.findViewById(R.id.tv_titulo);
+           TextView conversaContato = view.findViewById(R.id.tv_subtitulo);
            Conversa conversa = conversas.get(position);
            nomeContato.setText(conversa.getNome());
            conversaContato.setText(conversa.getMensagem());

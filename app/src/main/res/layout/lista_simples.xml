@@ -6,7 +6,7 @@
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
 
-        android:id="@+id/tv_nome"
+        android:id="@+id/tv_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
@@ -19,7 +19,7 @@
     </TextView>
 
     <TextView
-        android:id="@+id/tv_telefone"
+        android:id="@+id/tv_subtitulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
