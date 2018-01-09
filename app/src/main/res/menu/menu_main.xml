@@ -22,11 +22,4 @@
         android:icon="@drawable/ic_search"/>
 
 
-    <item android:id="@+id/item_adicionar"
-        android:title="Adicionar"
-        android:orderInCategory="400"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_person_add"/>
-
-
 </menu>
